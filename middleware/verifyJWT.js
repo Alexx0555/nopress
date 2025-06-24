@@ -1,24 +1,3 @@
-// const jwt = require('jsonwebtoken')
-// require('dotenv').config()
-
-// const verifyJWT = (req,res,next)=>{
-//     const authHeader = req.headers.authorization
-//     if(!authHeader)
-//         res.sendStatus(401)
-//     const token= authHeader.split(" ")[1]
-//     jwt.verify(
-//         token,
-//         process.env.ACCESS_TOKEN_SECRET,
-//         (err,decoded)=>{
-//             if(err) return res.sendStatus(403)
-//             req.user = decoded.UserInfo.username
-//             req.roles = decoded.UserInfo.roles
-//             next()
-//         }
-//     )
-// }
-
-// module.exports = verifyJWT
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
@@ -40,10 +19,9 @@ const verifyJWT = (req,res,next)=>{
                 return res.sendStatus(403); 
             }
 
-            req.user = decoded.username; 
-            req.roles = decoded.roles;   
-
-            console.log("Authenticated User:"+ req.user+ "Roles:"+ req.roles); 
+            req.user = decoded.userinfo.username;
+            req.roles = decoded.userinfo.roles;
+            console.log("Decoded JWT:", decoded);
             next();
         }
     );
